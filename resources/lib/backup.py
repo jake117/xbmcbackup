@@ -109,6 +109,10 @@ class XbmcBackup:
     def selectRestore(self,restore_point):
         self.restore_point = restore_point
 
+    def setRestorePath(self,path):
+        self.remote_base_path = xbmc.translatePath(path)
+        self.remote_vfs = XBMCFileSystem(xbmc.translatePath(path))
+
     def skipAdvanced(self):
         self.skip_advanced = True
 

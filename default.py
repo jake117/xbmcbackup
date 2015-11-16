@@ -45,8 +45,8 @@ if(mode != -1):
         if(mode == backup.Restore):
             #get list of valid restore points
             restorePoints = backup.listBackups()
-            pointNames = []
-            folderNames = []
+            pointNames = [utils.getString(30102)]
+            folderNames = ['0']
             
             for aDir in restorePoints:
                 pointNames.append(aDir[1])
@@ -68,7 +68,14 @@ if(mode != -1):
                 selectedRestore = xbmcgui.Dialog().select(utils.getString(30010) + " - " + utils.getString(30021),pointNames)
 
             if(selectedRestore != -1):
-                backup.selectRestore(restorePoints[selectedRestore][0])
+                
+                if(selectedRestore == 0):
+                    #user needs to specify a downloadable URL
+                    download_url = xbmcgui.Dialog().input("Enter a ZIP file URL","http://")
+                    backup.setRestorePath(download_url);
+                    
+                else:
+                    backup.selectRestore(restorePoints[selectedRestore][0])
                     
         backup.run(mode)
     else:
