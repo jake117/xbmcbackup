@@ -145,9 +145,10 @@ class DropboxFileSystem(Vfs):
 
             #print url in log
             utils.log("Authorize URL: " + url)
-#            xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30056),utils.getString(30057))  
-            xbmcgui.Dialog().input(utils.getString(30010), url)
+
+            #            xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30056),utils.getString(30057))  
             web.open(url, new=1)
+            xbmcgui.Dialog().input(utils.getString(30010), url)
             
             #if user authorized this will work
             user_token = sess.obtain_access_token(token)
