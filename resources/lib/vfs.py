@@ -5,6 +5,7 @@ import xbmcgui
 import zipfile
 import zlib
 import os
+import webbrowser as web
 from dropbox import client, rest, session
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
@@ -130,6 +131,8 @@ class DropboxFileSystem(Vfs):
     def setup(self):
         if(self.APP_KEY == '' or self.APP_SECRET == ''):
             xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30058),utils.getString(30059))
+            #
+                        
             return
         
         user_token_key,user_token_secret = self.getToken()
@@ -142,7 +145,9 @@ class DropboxFileSystem(Vfs):
 
             #print url in log
             utils.log("Authorize URL: " + url)
-            xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30056),utils.getString(30057))  
+#            xbmcgui.Dialog().ok(utils.getString(30010),utils.getString(30056),utils.getString(30057))  
+            xbmcgui.Dialog().input(utils.getString(30010), url)
+            web.open(url, new=1)
             
             #if user authorized this will work
             user_token = sess.obtain_access_token(token)
